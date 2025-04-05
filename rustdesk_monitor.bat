@@ -2,7 +2,7 @@
 setlocal enabledelayedexpansion
 
 :: === CONFIG ===
-set "rustdeskPath=C:\Program Files\RustDesk\RustDesk.exe"
+set "rustdeskPath=C:\Program Files\rustdesk\rustdesk.exe"
 set "nircmdPath=%~dp0nircmd.exe"
 set "logFile=%~dp0debug_log.txt"
 set "nircmdUrl=https://www.nirsoft.net/utils/nircmd.zip"
