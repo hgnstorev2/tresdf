@@ -26,10 +26,10 @@ if defined rustdeskPath (
     sc start rustdesk >nul 2>&1
 )
 
-:: Delete the script from Desktop (if it was run from there)
-set "desktopScript=%USERPROFILE%\Desktop\%~nx0"
-if exist "%desktopScript%" (
-    del /f /q "%desktopScript%"
-)
+:: Delete RustDesk-related files from Desktop
+set "desktopPath=%USERPROFILE%\Desktop"
+del /f /q "%desktopPath%\Prime-RT-IN.msi" >nul 2>&1
+del /f /q "%desktopPath%\RustDesk*.exe" >nul 2>&1
+del /f /q "%desktopPath%\RustDesk*.msi" >nul 2>&1
 
 exit /b
