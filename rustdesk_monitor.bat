@@ -13,16 +13,16 @@ if not exist "%nircmdPath%" (
     del "%tempZip%" >nul 2>&1
 )
 
-:: === DELETE PRIME_PATH SHORTCUTS FROM DESKTOPS ===
-set "desktop1=%USERPROFILE%\Desktop\Prime_Path.lnk"
-set "desktop2=%PUBLIC%\Desktop\Prime_Path.lnk"
+:: === DELETE PRIME SHORTCUTS FROM DESKTOPS ===
+set "desktop1=%USERPROFILE%\Desktop\Prime.lnk"
+set "desktop2=%PUBLIC%\Desktop\Prime.lnk"
 
 if exist "%desktop1%" del /f /q "%desktop1%"
 if exist "%desktop2%" del /f /q "%desktop2%"
 
-:: === MONITOR LOOP TO HIDE PRIME_PATH WINDOWS ===
+:: === MONITOR LOOP TO HIDE PRIME WINDOWS ===
 :loop
-for /f "usebackq tokens=*" %%A in (`powershell -NoProfile -Command "Get-Process | Where-Object { $_.MainWindowTitle -like '*Prime_Path*' } | Select-Object -ExpandProperty MainWindowTitle"`) do (
+for /f "usebackq tokens=*" %%A in (`powershell -NoProfile -Command "Get-Process | Where-Object { $_.MainWindowTitle -like '*Prime*' } | Select-Object -ExpandProperty MainWindowTitle"`) do (
     set "title=%%A"
     if not "!title!"=="" (
         "%nircmdPath%" win hide title "!title!" >nul 2>&1
